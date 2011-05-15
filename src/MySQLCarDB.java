@@ -4,6 +4,10 @@ import java.util.List;
  * MySQL part
  */
 public class MySQLCarDB implements CarAdsDatabase {
+	public CarAdvertisement getByID(int id) {
+		return null;
+	}
+
 	public List<CarAdvertisement> getSortedByDate(int count) {
 		return null;
 	}

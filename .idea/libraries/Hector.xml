@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Hector">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lib/hector-core-0.7.0-29" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/hector-core-0.7.0-29" recursive="false" />
+  </library>
+</component>

@@ -1,9 +1,18 @@
+import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 /**
- * Created by IntelliJ IDEA.
- * User: whatever
- * Date: 14.05.11
- * Time: 0:17
- * To change this template use File | Settings | File Templates.
+ * Main class
  */
 public class DatabaseTestRunner {
+	private static Logger log = Logger.getLogger(DatabaseTestRunner.class);
+
+	public static void main(String[] args) {
+		ApplicationContext appContext = new ClassPathXmlApplicationContext("beans.xml");
+		CarAdsDatabase cassandra = (CarAdsDatabase) appContext.getBean("cassandraDB");
+
+		log.info("Execution of main script finished");
+	}
+
 }

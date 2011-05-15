@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="cassandraHostConfigurator"
+          class="me.prettyprint.cassandra.service.CassandraHostConfigurator">
+        <constructor-arg value="localhost:9160" />
+    </bean>
+
+    <bean id="cluster"
+          class="me.prettyprint.cassandra.service.ThriftCluster">
+        <constructor-arg value="TestCluster" />
+        <constructor-arg ref="cassandraHostConfigurator" />
+    </bean>
+
+    <bean id="keyspace"
+          class="me.prettyprint.hector.api.factory.HFactory" factory-method="createKeyspace">
+        <constructor-arg value="CarAdvertisement" />
+        <constructor-arg ref="cluster" />
+    </bean>
+
+    <bean id="cassandraDB"
+          class="CassandraCarDB">
+        <constructor-arg ref="keyspace"/>
+    </bean>
+
+</beans>

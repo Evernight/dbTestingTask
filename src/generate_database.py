@@ -72,7 +72,8 @@ class CarAdsRecord:
 		self.color = color
 
 	def __str__(self):
-		return DELIMETER.join(map(str, [self.id, self.model, self.car_class, self.color, self.year, self.condition, self.price, self.contact, self.date, self.rating]))
+		return DELIMETER.join(map(str, [self.id, self.model, self.car_class, self.color, self.year,
+		                      self.condition, self.price, self.contact, self.date, self.rating]))
 
 def main():
 	n = int(sys.argv[1])

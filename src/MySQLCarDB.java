@@ -20,6 +20,9 @@ public class MySQLCarDB implements CarAdsDatabase {
 		return null;
 	}
 
+	public void addRows(List<CarAdvertisement> list) {
+	}
+
 	public void exportToFile(String filename) {
 	}
 }

@@ -31,6 +31,9 @@ public class CassandraCarDB implements CarAdsDatabase {
 		return null;
 	}
 
+	public void addRows(List<CarAdvertisement> list) {
+	}
+
 	public void exportToFile(String filename) {
 	}
 

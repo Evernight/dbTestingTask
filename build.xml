@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="dbtestingtask" default="all">
+  
+  
+  <property file="dbtestingtask.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.zip"/>
+    <include name="*.war"/>
+    <include name="*.egg"/>
+    <include name="*.ear"/>
+    <include name="*.swc"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <include name="**/?*.properties"/>
+    <include name="**/?*.xml"/>
+    <include name="**/?*.gif"/>
+    <include name="**/?*.png"/>
+    <include name="**/?*.jpeg"/>
+    <include name="**/?*.jpg"/>
+    <include name="**/?*.html"/>
+    <include name="**/?*.dtd"/>
+    <include name="**/?*.tld"/>
+    <include name="**/?*.ftl"/>
+  </patternset>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library./usr/share/java.classpath">
+    <pathelement location="${basedir}/../../../../usr/share/java/commons-logging.jar"/>
+    <pathelement location="${basedir}/../../../../usr/share/java/log4j-1.2.jar"/>
+    <pathelement location="${basedir}/../../../../usr/share/java/spring-beans.jar"/>
+    <pathelement location="${basedir}/../../../../usr/share/java/spring-context.jar"/>
+    <pathelement location="${basedir}/../../../../usr/share/java/spring-core.jar"/>
+    <pathelement location="${basedir}/../../../../usr/share/java/spring-jdbc.jar"/>
+  </path>
+  
+  <path id="library.hector.classpath">
+    <fileset dir="${basedir}/lib/hector-core-0.7.0-29">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="library.slf4j.classpath">
+    <fileset dir="${basedir}/lib/slf4j-1.6.1/slf4j-nop">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  
+  <!-- Global Libraries -->
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module dbTestingTask -->
+  
+  <dirname property="module.dbtestingtask.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.dbtestingtask" value="${compiler.args}"/>
+  
+  <property name="dbtestingtask.output.dir" value="${module.dbtestingtask.basedir}/out/production/dbTestingTask"/>
+  <property name="dbtestingtask.testoutput.dir" value="${module.dbtestingtask.basedir}/out/test/dbTestingTask"/>
+  
+  <path id="dbtestingtask.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="dbtestingtask.module.production.classpath">
+    <path refid="library.hector.classpath"/>
+    <path refid="library./usr/share/java.classpath"/>
+    <path refid="library.slf4j.classpath"/>
+  </path>
+  
+  <path id="dbtestingtask.runtime.production.module.classpath">
+    <pathelement location="${dbtestingtask.output.dir}"/>
+    <path refid="library.hector.classpath"/>
+    <path refid="library./usr/share/java.classpath"/>
+    <path refid="library.slf4j.classpath"/>
+  </path>
+  
+  <path id="dbtestingtask.module.classpath">
+    <pathelement location="${dbtestingtask.output.dir}"/>
+    <path refid="library.hector.classpath"/>
+    <path refid="library./usr/share/java.classpath"/>
+    <path refid="library.slf4j.classpath"/>
+  </path>
+  
+  <path id="dbtestingtask.runtime.module.classpath">
+    <pathelement location="${dbtestingtask.testoutput.dir}"/>
+    <pathelement location="${dbtestingtask.output.dir}"/>
+    <path refid="library.hector.classpath"/>
+    <path refid="library./usr/share/java.classpath"/>
+    <path refid="library.slf4j.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.dbtestingtask">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.dbtestingtask">
+    <patternset refid="excluded.from.module.dbtestingtask"/>
+  </patternset>
+  
+  <path id="dbtestingtask.module.sourcepath">
+    <dirset dir="${module.dbtestingtask.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.dbtestingtask" depends="compile.module.dbtestingtask.production,compile.module.dbtestingtask.tests" description="Compile module dbTestingTask"/>
+  
+  <target name="compile.module.dbtestingtask.production" description="Compile module dbTestingTask; production classes">
+    <mkdir dir="${dbtestingtask.output.dir}"/>
+    <javac destdir="${dbtestingtask.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.dbtestingtask}"/>
+      <bootclasspath refid="dbtestingtask.module.bootclasspath"/>
+      <classpath refid="dbtestingtask.module.production.classpath"/>
+      <src refid="dbtestingtask.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.dbtestingtask"/>
+    </javac>
+    
+    <copy todir="${dbtestingtask.output.dir}">
+      <fileset dir="${module.dbtestingtask.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.dbtestingtask.tests" depends="compile.module.dbtestingtask.production" description="compile module dbTestingTask; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.dbtestingtask" description="cleanup module">
+    <delete dir="${dbtestingtask.output.dir}"/>
+    <delete dir="${dbtestingtask.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.dbtestingtask" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.dbtestingtask" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>

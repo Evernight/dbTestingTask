@@ -11,4 +11,5 @@ public interface CarAdsDatabase {
 	public List<CarAdvertisement> getOnlySelectedModel(String model, int count);
 	public void addRows(List<CarAdvertisement> list);
 	public void exportToFile(String filename);
+	public void clearDatabase();
 }

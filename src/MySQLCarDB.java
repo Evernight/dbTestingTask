@@ -25,4 +25,7 @@ public class MySQLCarDB implements CarAdsDatabase {
 
 	public void exportToFile(String filename) {
 	}
+
+	public void clearDatabase() {
+	}
 }

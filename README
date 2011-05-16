@@ -1,1 +1,7 @@
-There's something here
+В проекте используется:
++ Spring Inversion of Control
++ log4j
++ Hector
+
+Features:
++ Недопиленный так себе работающий сценарий сборки ant

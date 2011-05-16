@@ -13,6 +13,8 @@ public class DatabaseTestRunner {
 	public static void RunTest(CarAdsDatabase db) throws IOException {
 		List<CarAdvertisement> data = PlainTextCarDBDump.loadFromFile("resources/handmade.dump");
 		db.addRows(data);
+		log.debug(db.getByID(1).color);
+		db.clearDatabase();
 	}
 
 	public static void main(String[] args) throws IOException {

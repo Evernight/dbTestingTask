@@ -1,11 +1,66 @@
-/**
- * Adapter to convert CarAdvertisement to object compatible with Cassandra structure
- */
-public class CarAdvertisementCassandra {
-	private CarAdvertisement carAdvertisement;
+import me.prettyprint.cassandra.serializers.DoubleSerializer;
+import me.prettyprint.cassandra.serializers.IntegerSerializer;
+import me.prettyprint.cassandra.serializers.StringSerializer;
+import me.prettyprint.hector.api.beans.ColumnSlice;
+import me.prettyprint.hector.api.factory.HFactory;
+import me.prettyprint.hector.api.mutation.Mutator;
+import org.apache.log4j.Logger;
 
-	public CarAdvertisementCassandra(CarAdvertisement carAdvertisement) {
-		this.carAdvertisement = carAdvertisement;
+/**
+ * TODO write doc
+ */
+public  class CarAdvertisementCassandra {
+	private static Logger log = Logger.getLogger(CarAdvertisementCassandra.class);
+
+	private static StringSerializer stringSerializer = new StringSerializer();
+	private static IntegerSerializer integerSerializer = new IntegerSerializer();
+	private static DoubleSerializer doubleSerializer = new DoubleSerializer();
+
+	public static void appendMutatorWithAd(Mutator<Integer> mutator, CarAdvertisement ad) {
+		mutator.addInsertion(
+				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				HFactory.createStringColumn("id", String.valueOf(ad.id)));
+		mutator.addInsertion(
+				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				HFactory.createStringColumn("model", ad.model));
+		mutator.addInsertion(
+				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				HFactory.createStringColumn("car_class", ad.car_class));
+		mutator.addInsertion(
+				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				HFactory.createStringColumn("color", ad.color));
+		mutator.addInsertion(
+				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				HFactory.createStringColumn("year", String.valueOf(ad.year)));
+		mutator.addInsertion(
+				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				HFactory.createStringColumn("condition", ad.condition));
+		mutator.addInsertion(
+				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				HFactory.createStringColumn("price", String.valueOf(ad.price)));
+		mutator.addInsertion(
+				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				HFactory.createStringColumn("contact", ad.contact));
+		mutator.addInsertion(
+				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				HFactory.createStringColumn("date", ad.date));
+		mutator.addInsertion(
+				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				HFactory.createStringColumn("rating", String.valueOf(ad.rating)));
+	}
+
+	public static CarAdvertisement fromColumnSlice(ColumnSlice slice) {
+		return new CarAdvertisement(
+				Integer.valueOf((String) slice.getColumnByName("id").getValue()),
+				(String) slice.getColumnByName("model").getValue(),
+				(String) slice.getColumnByName("car_class").getValue(),
+				(String) slice.getColumnByName("color").getValue(),
+				Integer.valueOf((String) slice.getColumnByName("year").getValue()),
+				(String) slice.getColumnByName("condition").getValue(),
+				Integer.valueOf((String) slice.getColumnByName("price").getValue()),
+				(String) slice.getColumnByName("contact").getValue(),
+				(String) slice.getColumnByName("date").getValue(),
+				Double.valueOf((String) slice.getColumnByName("rating").getValue()));
 	}
 
 }

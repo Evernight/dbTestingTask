@@ -2,9 +2,14 @@ import me.prettyprint.cassandra.serializers.DoubleSerializer;
 import me.prettyprint.cassandra.serializers.IntegerSerializer;
 import me.prettyprint.cassandra.serializers.StringSerializer;
 import me.prettyprint.hector.api.beans.ColumnSlice;
+import me.prettyprint.hector.api.beans.OrderedRows;
+import me.prettyprint.hector.api.beans.Row;
 import me.prettyprint.hector.api.factory.HFactory;
 import me.prettyprint.hector.api.mutation.Mutator;
 import org.apache.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TODO write doc
@@ -61,6 +66,15 @@ public  class CarAdvertisementCassandra {
 				(String) slice.getColumnByName("contact").getValue(),
 				(String) slice.getColumnByName("date").getValue(),
 				Double.valueOf((String) slice.getColumnByName("rating").getValue()));
+	}
+
+	public static List<CarAdvertisement> fromOrderedRows(OrderedRows rows) {
+		ArrayList<CarAdvertisement> result = new ArrayList<CarAdvertisement>();
+		for (Object row : rows.getList()) {
+			result.add(fromColumnSlice(((Row) row).getColumnSlice()));
+		}
+
+		return result;
 	}
 
 }

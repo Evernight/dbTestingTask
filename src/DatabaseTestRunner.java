@@ -14,6 +14,9 @@ public class DatabaseTestRunner {
 		List<CarAdvertisement> data = PlainTextCarDBDump.loadFromFile("resources/handmade.dump");
 		db.addRows(data);
 		log.debug(db.getByID(1).color);
+		List<CarAdvertisement> t = db.getSortedByDate(4);
+		log.debug(t.size());
+		log.debug(t.get(0).color);
 		db.clearDatabase();
 	}
 

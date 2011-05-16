@@ -4,10 +4,12 @@ import me.prettyprint.cassandra.serializers.StringSerializer;
 import me.prettyprint.hector.api.Keyspace;
 import me.prettyprint.hector.api.ResultStatus;
 import me.prettyprint.hector.api.beans.ColumnSlice;
+import me.prettyprint.hector.api.beans.OrderedRows;
 import me.prettyprint.hector.api.factory.HFactory;
 import me.prettyprint.hector.api.mutation.Mutator;
 import me.prettyprint.hector.api.query.ColumnQuery;
 import me.prettyprint.hector.api.query.QueryResult;
+import me.prettyprint.hector.api.query.RangeSlicesQuery;
 import me.prettyprint.hector.api.query.SliceQuery;
 import org.apache.log4j.Logger;
 
@@ -41,7 +43,15 @@ public class CassandraCarDB implements CarAdsDatabase {
 	}
 
 	public List<CarAdvertisement> getSortedByDate(int count) {
-		return null;
+		RangeSlicesQuery query = HFactory.createRangeSlicesQuery(
+				keyspace, integerSerializer, stringSerializer, stringSerializer);
+		query.setColumnFamily(CassandraConfigurator.BY_ID_COLUMN_FAMILY)
+		.setRowCount(count)
+		.setRange("", "", false, 10);
+
+		QueryResult result = query.execute();
+
+		return CarAdvertisementCassandra.fromOrderedRows((OrderedRows) result.get());
 	}
 
 	public List<CarAdvertisement> getSortedByPrice(int count) {

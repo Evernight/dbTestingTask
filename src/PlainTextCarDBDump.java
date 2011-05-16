@@ -3,14 +3,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class to load data from plain text
+ * Class to load data from plain text file
  */
 public class PlainTextCarDBDump {
 	public static String DELIMETER = "\t";
 
 	private static CarAdvertisement parseRecord(String s) throws IOException {
 		String[] items = s.split(DELIMETER);
-		//TODO implement
 		if (items.length != 10)
 			throw new IOException();
 		return new CarAdvertisement(Integer.valueOf(items[0]), items[1], items[2], items[3],

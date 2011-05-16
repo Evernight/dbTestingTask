@@ -2,12 +2,10 @@ import java.util.List;
 import me.prettyprint.cassandra.serializers.IntegerSerializer;
 import me.prettyprint.cassandra.serializers.StringSerializer;
 import me.prettyprint.hector.api.Keyspace;
-import me.prettyprint.hector.api.ResultStatus;
 import me.prettyprint.hector.api.beans.ColumnSlice;
 import me.prettyprint.hector.api.beans.OrderedRows;
 import me.prettyprint.hector.api.factory.HFactory;
 import me.prettyprint.hector.api.mutation.Mutator;
-import me.prettyprint.hector.api.query.ColumnQuery;
 import me.prettyprint.hector.api.query.QueryResult;
 import me.prettyprint.hector.api.query.RangeSlicesQuery;
 import me.prettyprint.hector.api.query.SliceQuery;
@@ -32,24 +30,26 @@ public class CassandraCarDB implements CarAdsDatabase {
 	}
 
 	public CarAdvertisement getByID(int id) {
-		SliceQuery query = HFactory.createSliceQuery(keyspace, integerSerializer, stringSerializer, stringSerializer);
+		SliceQuery<Integer, String, String> query= HFactory.createSliceQuery(keyspace, integerSerializer, stringSerializer, stringSerializer);
 		query.setColumnFamily(CassandraConfigurator.BY_ID_COLUMN_FAMILY)
 		.setKey(id)
 		.setRange("", "", false, 10);
 
-		QueryResult result = query.execute();
+		QueryResult<ColumnSlice<String, String>> result = query.execute();
 
-		return CarAdvertisementCassandra.fromColumnSlice((ColumnSlice) result.get());
+		return CarAdvertisementCassandra.fromColumnSlice((ColumnSlice<String, String>) result.get());
 	}
 
 	public List<CarAdvertisement> getSortedByDate(int count) {
-		RangeSlicesQuery query = HFactory.createRangeSlicesQuery(
+		RangeSlicesQuery<Integer, String, String> query = HFactory.createRangeSlicesQuery(
 				keyspace, integerSerializer, stringSerializer, stringSerializer);
 		query.setColumnFamily(CassandraConfigurator.BY_ID_COLUMN_FAMILY)
 		.setRowCount(count)
 		.setRange("", "", false, 10);
 
+		log.info(String.format("Request for %d items sorted by date", count));
 		QueryResult result = query.execute();
+		log.info("Items extraction finished");
 
 		return CarAdvertisementCassandra.fromOrderedRows((OrderedRows) result.get());
 	}
@@ -77,7 +77,6 @@ public class CassandraCarDB implements CarAdsDatabase {
 
 	public void clearDatabase() {
 		Mutator<Integer> mutator = HFactory.createMutator(keyspace, integerSerializer);
-		// TODO write
 	}
 
 }

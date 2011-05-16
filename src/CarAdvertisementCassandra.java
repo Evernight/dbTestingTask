@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO write doc
+ * Class contains functions needed to convert CarAdvertisement between Cassandra DB record
+ * and actual java object
  */
 public  class CarAdvertisementCassandra {
 	private static Logger log = Logger.getLogger(CarAdvertisementCassandra.class);
@@ -54,7 +55,7 @@ public  class CarAdvertisementCassandra {
 				HFactory.createStringColumn("rating", String.valueOf(ad.rating)));
 	}
 
-	public static CarAdvertisement fromColumnSlice(ColumnSlice slice) {
+	public static CarAdvertisement fromColumnSlice(ColumnSlice<String, String> slice) {
 		return new CarAdvertisement(
 				Integer.valueOf((String) slice.getColumnByName("id").getValue()),
 				(String) slice.getColumnByName("model").getValue(),
@@ -71,7 +72,7 @@ public  class CarAdvertisementCassandra {
 	public static List<CarAdvertisement> fromOrderedRows(OrderedRows rows) {
 		ArrayList<CarAdvertisement> result = new ArrayList<CarAdvertisement>();
 		for (Object row : rows.getList()) {
-			result.add(fromColumnSlice(((Row) row).getColumnSlice()));
+				result.add(fromColumnSlice(((Row<Integer, String, String>) row).getColumnSlice()));
 		}
 
 		return result;

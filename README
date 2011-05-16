@@ -1,7 +1,8 @@
-В проекте используется:
+В проекте используются:
 + Spring Inversion of Control
 + log4j
-+ Hector
++ Hector для Cassandra
++ немного JUnit
 
 Features:
-+ Недопиленный так себе работающий сценарий сборки ant
++ Плохо работающий сценарий сборки ant

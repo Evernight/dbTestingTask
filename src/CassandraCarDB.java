@@ -28,14 +28,14 @@ public class CassandraCarDB implements CarAdsDatabase {
 
 	public CassandraCarDB(Cluster cluster) {
 		this.cluster = cluster;
-		this.keyspace = HFactory.createKeyspace(CassandraConfigurator.KEYSPACE_NAME, cluster);
+		this.keyspace = HFactory.createKeyspace(CassandraConfigurator.keyspaceName, cluster);
 
 		log.debug("Created CassandraCarDB instance");
 	}
 
 	public CarAdvertisement getByID(int id) {
 		SliceQuery<Integer, String, String> query= HFactory.createSliceQuery(keyspace, integerSerializer, stringSerializer, stringSerializer);
-		query.setColumnFamily(CassandraConfigurator.BY_ID_COLUMN_FAMILY)
+		query.setColumnFamily(CassandraConfigurator.byIDColumnFamilyName)
 		.setKey(id)
 		.setRange("", "", false, 10);
 
@@ -47,7 +47,7 @@ public class CassandraCarDB implements CarAdsDatabase {
 	public List<CarAdvertisement> getSortedByDate(int count) {
 		RangeSlicesQuery<Integer, String, String> query = HFactory.createRangeSlicesQuery(
 				keyspace, integerSerializer, stringSerializer, stringSerializer);
-		query.setColumnFamily(CassandraConfigurator.BY_ID_COLUMN_FAMILY)
+		query.setColumnFamily(CassandraConfigurator.byIDColumnFamilyName)
 		.setRowCount(count)
 		.setRange("", "", false, 10);
 
@@ -83,7 +83,7 @@ public class CassandraCarDB implements CarAdsDatabase {
 
 	public void clearDatabase() throws IOException {
 		log.info("Clearing database...");
-		cluster.truncate(CassandraConfigurator.KEYSPACE_NAME, CassandraConfigurator.BY_ID_COLUMN_FAMILY);
+		cluster.truncate(CassandraConfigurator.keyspaceName, CassandraConfigurator.byIDColumnFamilyName);
 		log.info("Database cleared");
 	}
 

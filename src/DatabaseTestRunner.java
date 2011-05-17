@@ -11,7 +11,6 @@ import java.util.List;
  * Main class
  */
 public class DatabaseTestRunner {
-	// TODO more tests
 	private static Logger log = Logger.getLogger(DatabaseTestRunner.class);
 
 	@Test
@@ -23,6 +22,8 @@ public class DatabaseTestRunner {
 		Assert.assertEquals("Black", db.getByID(0).color);
 		List<CarAdvertisement> r = db.getSortedByDate(10);
 		Assert.assertEquals(4, r.size());
+		List<CarAdvertisement> z = db.getSortedByDate(3);
+		Assert.assertEquals(3, z.size());
 
 		db.clearDatabase();
 	}
@@ -34,7 +35,9 @@ public class DatabaseTestRunner {
 		RunSmallTest(cassandra);
 
 		((ConfigurableApplicationContext) appContext).close();
+
 		log.info("Execution of main script finished");
+		System.exit(0);
 	}
 
 }

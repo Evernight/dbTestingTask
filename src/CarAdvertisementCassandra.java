@@ -14,7 +14,7 @@ import java.util.List;
  * Class contains functions needed to convert CarAdvertisement between Cassandra DB record
  * and actual java object
  */
-public  class CarAdvertisementCassandra {
+public class CarAdvertisementCassandra {
 	private static Logger log = Logger.getLogger(CarAdvertisementCassandra.class);
 
 	private static StringSerializer stringSerializer = new StringSerializer();
@@ -23,34 +23,34 @@ public  class CarAdvertisementCassandra {
 
 	public static void appendMutatorWithAd(Mutator<Integer> mutator, CarAdvertisement ad) {
 		mutator.addInsertion(
-				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				ad.id, CassandraConfigurator.byIDColumnFamilyName,
 				HFactory.createStringColumn("id", String.valueOf(ad.id)));
 		mutator.addInsertion(
-				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				ad.id, CassandraConfigurator.byIDColumnFamilyName,
 				HFactory.createStringColumn("model", ad.model));
 		mutator.addInsertion(
-				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				ad.id, CassandraConfigurator.byIDColumnFamilyName,
 				HFactory.createStringColumn("car_class", ad.car_class));
 		mutator.addInsertion(
-				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				ad.id, CassandraConfigurator.byIDColumnFamilyName,
 				HFactory.createStringColumn("color", ad.color));
 		mutator.addInsertion(
-				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				ad.id, CassandraConfigurator.byIDColumnFamilyName,
 				HFactory.createStringColumn("year", String.valueOf(ad.year)));
 		mutator.addInsertion(
-				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				ad.id, CassandraConfigurator.byIDColumnFamilyName,
 				HFactory.createStringColumn("condition", ad.condition));
 		mutator.addInsertion(
-				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				ad.id, CassandraConfigurator.byIDColumnFamilyName,
 				HFactory.createStringColumn("price", String.valueOf(ad.price)));
 		mutator.addInsertion(
-				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				ad.id, CassandraConfigurator.byIDColumnFamilyName,
 				HFactory.createStringColumn("contact", ad.contact));
 		mutator.addInsertion(
-				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				ad.id, CassandraConfigurator.byIDColumnFamilyName,
 				HFactory.createStringColumn("date", ad.date));
 		mutator.addInsertion(
-				ad.id, CassandraConfigurator.BY_ID_COLUMN_FAMILY,
+				ad.id, CassandraConfigurator.byIDColumnFamilyName,
 				HFactory.createStringColumn("rating", String.valueOf(ad.rating)));
 	}
 

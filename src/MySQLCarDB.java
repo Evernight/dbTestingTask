@@ -5,6 +5,7 @@ import java.util.List;
  */
 public class MySQLCarDB implements CarAdsDatabase {
 	public CarAdvertisement getByID(int id) {
+		// TODO implement all that stuff
 		return null;
 	}
 

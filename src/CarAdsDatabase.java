@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -11,5 +12,5 @@ public interface CarAdsDatabase {
 	public List<CarAdvertisement> getOnlySelectedModel(String model, int count);
 	public void addRows(List<CarAdvertisement> list);
 	public void exportToFile(String filename);
-	public void clearDatabase();
+	public void clearDatabase() throws IOException;
 }

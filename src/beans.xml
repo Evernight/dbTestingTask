@@ -14,15 +14,15 @@
         <constructor-arg ref="cassandraHostConfigurator" />
     </bean>
 
-    <bean id="keyspace"
+    <!--<bean id="keyspace"
           class="me.prettyprint.hector.api.factory.HFactory" factory-method="createKeyspace">
         <constructor-arg value="CarAdvertisement" />
         <constructor-arg ref="cluster" />
-    </bean>
+    </bean>-->
 
     <bean id="cassandraDB"
           class="CassandraCarDB">
-        <constructor-arg ref="keyspace"/>
+        <constructor-arg ref="cluster"/>
     </bean>
 
 </beans>

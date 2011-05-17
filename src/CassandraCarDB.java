@@ -1,6 +1,10 @@
+import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import me.prettyprint.cassandra.serializers.IntegerSerializer;
 import me.prettyprint.cassandra.serializers.StringSerializer;
+import me.prettyprint.cassandra.service.KeyIterator;
+import me.prettyprint.hector.api.Cluster;
 import me.prettyprint.hector.api.Keyspace;
 import me.prettyprint.hector.api.beans.ColumnSlice;
 import me.prettyprint.hector.api.beans.OrderedRows;
@@ -9,6 +13,7 @@ import me.prettyprint.hector.api.mutation.Mutator;
 import me.prettyprint.hector.api.query.QueryResult;
 import me.prettyprint.hector.api.query.RangeSlicesQuery;
 import me.prettyprint.hector.api.query.SliceQuery;
+import org.apache.cassandra.db.Truncation;
 import org.apache.log4j.Logger;
 
 /**
@@ -22,9 +27,11 @@ public class CassandraCarDB implements CarAdsDatabase {
 	private static IntegerSerializer integerSerializer = new IntegerSerializer();
 
 	private Keyspace keyspace;
+	private Cluster cluster;
 
-	public CassandraCarDB(Keyspace keyspace) {
-		this.keyspace = keyspace;
+	public CassandraCarDB(Cluster cluster) {
+		this.cluster = cluster;
+		this.keyspace = HFactory.createKeyspace(CassandraConfigurator.KEYSPACE_NAME, cluster);
 
 		log.debug("Created CassandraCarDB instance");
 	}
@@ -48,17 +55,19 @@ public class CassandraCarDB implements CarAdsDatabase {
 		.setRange("", "", false, 10);
 
 		log.info(String.format("Request for %d items sorted by date", count));
-		QueryResult result = query.execute();
+		QueryResult<OrderedRows<Integer, String, String>> result = query.execute();
 		log.info("Items extraction finished");
 
-		return CarAdvertisementCassandra.fromOrderedRows((OrderedRows) result.get());
+		return CarAdvertisementCassandra.fromOrderedRows(result.get());
 	}
 
 	public List<CarAdvertisement> getSortedByPrice(int count) {
+		// TODO implement using additional column family
 		return null;
 	}
 
 	public List<CarAdvertisement> getOnlySelectedModel(String model, int count) {
+		// TODO implement using secondary index
 		return null;
 	}
 
@@ -67,16 +76,18 @@ public class CassandraCarDB implements CarAdsDatabase {
 		for (CarAdvertisement item : list) {
 			CarAdvertisementCassandra.appendMutatorWithAd(mutator, item);
 		}
-		log.info(String.format("Cassandra DB: initiated insertion of %d records", list.size()));
+		log.info(String.format("Initiated insertion of %d records", list.size()));
 		mutator.execute();
-		log.info(String.format("Cassandra DB: finished insertion of records"));
+		log.info(String.format("Finished insertion of records"));
 	}
 
 	public void exportToFile(String filename) {
 	}
 
-	public void clearDatabase() {
-		Mutator<Integer> mutator = HFactory.createMutator(keyspace, integerSerializer);
+	public void clearDatabase() throws IOException {
+		log.info("Clearing database...");
+		cluster.truncate(CassandraConfigurator.KEYSPACE_NAME, CassandraConfigurator.BY_ID_COLUMN_FAMILY);
+		log.info("Database cleared");
 	}
 
 }

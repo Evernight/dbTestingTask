@@ -10,16 +10,20 @@ import java.util.List;
  * Main class
  */
 public class DatabaseTestRunner {
+	// TODO more tests
 	private static Logger log = Logger.getLogger(DatabaseTestRunner.class);
 
 	@Test
 	public static void RunSmallTest(CarAdsDatabase db) throws IOException {
 		List<CarAdvertisement> data = PlainTextCarDBDump.loadFromFile("resources/handmade.dump");
+
 		db.addRows(data);
 
-		Assert.assertEquals(db.getByID(0).color, "Red");
-		List<CarAdvertisement> r = db.getSortedByDate(4);
-		Assert.assertEquals(r.size(), 3);
+		Assert.assertEquals("Black", db.getByID(0).color);
+		List<CarAdvertisement> r = db.getSortedByDate(10);
+		Assert.assertEquals(4, r.size());
+
+		db.clearDatabase();
 	}
 
 	public static void main(String[] args) throws IOException {

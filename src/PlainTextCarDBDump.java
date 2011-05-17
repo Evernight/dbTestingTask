@@ -1,3 +1,5 @@
+import org.apache.log4j.Logger;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +8,8 @@ import java.util.List;
  * Class to load data from plain text file
  */
 public class PlainTextCarDBDump {
+	private static Logger log = Logger.getLogger(PlainTextCarDBDump.class);
+
 	public static String DELIMETER = "\t";
 
 	private static CarAdvertisement parseRecord(String s) throws IOException {
@@ -23,12 +27,14 @@ public class PlainTextCarDBDump {
 
 		ArrayList<CarAdvertisement> result = new ArrayList<CarAdvertisement>();
 
+		log.info("Started reading records from dump file");
 		while (true) {
 			String next = in.readLine();
 			if (next == null)
 				break;
 			result.add(parseRecord(next));
 		}
+		log.info("Finished reading and parsing records");
 
 		return result;
 	}

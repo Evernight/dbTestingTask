@@ -69,10 +69,10 @@ public  class CarAdvertisementCassandra {
 				Double.valueOf((String) slice.getColumnByName("rating").getValue()));
 	}
 
-	public static List<CarAdvertisement> fromOrderedRows(OrderedRows rows) {
-		ArrayList<CarAdvertisement> result = new ArrayList<CarAdvertisement>();
-		for (Object row : rows.getList()) {
-				result.add(fromColumnSlice(((Row<Integer, String, String>) row).getColumnSlice()));
+	public static List<CarAdvertisement> fromOrderedRows(OrderedRows<Integer, String, String> rows) {
+		List<CarAdvertisement> result = new ArrayList<CarAdvertisement>();
+		for (Row<Integer, String, String> row : rows.getList()) {
+				result.add(fromColumnSlice(row.getColumnSlice()));
 		}
 
 		return result;

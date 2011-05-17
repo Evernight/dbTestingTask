@@ -1,5 +1,5 @@
 В проекте используются:
-+ Spring Inversion of Control
++ Spring Inversion of Control (?)
 + log4j
 + Hector для Cassandra
 + немного JUnit

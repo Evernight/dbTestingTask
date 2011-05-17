@@ -7,7 +7,6 @@ import me.prettyprint.hector.api.beans.Row;
 import me.prettyprint.hector.api.factory.HFactory;
 import me.prettyprint.hector.api.mutation.Mutator;
 import org.apache.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,9 +1,7 @@
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import me.prettyprint.cassandra.serializers.IntegerSerializer;
 import me.prettyprint.cassandra.serializers.StringSerializer;
-import me.prettyprint.cassandra.service.KeyIterator;
 import me.prettyprint.hector.api.Cluster;
 import me.prettyprint.hector.api.Keyspace;
 import me.prettyprint.hector.api.beans.ColumnSlice;
@@ -13,7 +11,6 @@ import me.prettyprint.hector.api.mutation.Mutator;
 import me.prettyprint.hector.api.query.QueryResult;
 import me.prettyprint.hector.api.query.RangeSlicesQuery;
 import me.prettyprint.hector.api.query.SliceQuery;
-import org.apache.cassandra.db.Truncation;
 import org.apache.log4j.Logger;
 
 /**
@@ -44,7 +41,7 @@ public class CassandraCarDB implements CarAdsDatabase {
 
 		QueryResult<ColumnSlice<String, String>> result = query.execute();
 
-		return CarAdvertisementCassandra.fromColumnSlice((ColumnSlice<String, String>) result.get());
+		return CarAdvertisementCassandra.fromColumnSlice(result.get());
 	}
 
 	public List<CarAdvertisement> getSortedByDate(int count) {

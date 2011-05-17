@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Spring">
+    <CLASSES>
+      <root url="jar:///usr/share/java/commons-logging.jar!/" />
+      <root url="jar:///usr/share/java/spring-core.jar!/" />
+      <root url="jar:///usr/share/java/spring-beans.jar!/" />
+      <root url="jar:///usr/share/java/spring-context.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

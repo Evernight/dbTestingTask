@@ -2,6 +2,7 @@ import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.io.IOException;
 import java.util.List;
@@ -32,6 +33,7 @@ public class DatabaseTestRunner {
 
 		RunSmallTest(cassandra);
 
+		((ConfigurableApplicationContext) appContext).close();
 		log.info("Execution of main script finished");
 	}
 

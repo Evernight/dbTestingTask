@@ -1,5 +1,3 @@
-import java.util.Date;
-
 /**
  * Class to represent single advertisement
  */
